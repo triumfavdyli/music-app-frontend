@@ -4,6 +4,7 @@ import { useApp } from '../../context/AppContext';
 import { SongCard } from '../Common/SongCard';
 import { Song } from '../../types';
 import axios from 'axios';
+import { API_URL } from '../../config';
 
 interface LikedSongsPageProps {
   onPageChange?: (page: string) => void;
@@ -19,9 +20,9 @@ export const LikedSongsPage: React.FC<LikedSongsPageProps> = ({ onPageChange }) 
       const isLiked = likedSongs.some((s) => String(s.id) === String(song.id));
 
       if (isLiked) {
-        await axios.delete(`http://localhost:4000/likes/${song.id}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+          await axios.delete(`${API_URL}/likes/${song.id}`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
         dispatch({ type: 'REMOVE_LIKED_SONG', payload: song.id });
       } else {
         await axios.post(

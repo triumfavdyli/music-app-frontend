@@ -4,6 +4,7 @@ import { useApp } from '../../context/AppContext';
 import { SongCard } from '../Common/SongCard';
 import { SearchBar } from '../Search/SearchBar';
 import { mockGenres, genreImages } from '../../data/mockData';
+import { API_URL } from '../../config';
 
 interface HomePageProps {
   onPageChange: (page: string) => void;
@@ -18,7 +19,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onPageChange }) => {
       try {
         dispatch({ type: 'SET_SONGS', payload: [] });
         
-        const response = await fetch('http://localhost:4000/songs');
+        const response = await fetch(`${API_URL}/songs`);
         const backendSongs = await response.json();
         
         if (Array.isArray(backendSongs) && backendSongs.length > 0) {

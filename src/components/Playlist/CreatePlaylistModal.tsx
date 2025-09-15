@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { X, Music, Image } from 'lucide-react';
+import { X, Music, } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
+import { API_URL } from '../../config';
 
 interface CreatePlaylistModalProps {
   isOpen: boolean;
@@ -33,7 +34,7 @@ export const CreatePlaylistModal: React.FC<CreatePlaylistModalProps> = ({ isOpen
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:4000/playlists', {
+       const response = await fetch(`${API_URL}/playlists`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -53,7 +54,7 @@ export const CreatePlaylistModal: React.FC<CreatePlaylistModalProps> = ({ isOpen
         localStorage.setItem('playlistCovers', JSON.stringify(storedCovers));
         try {
           const token = localStorage.getItem('token');
-          const playlistsResponse = await fetch('http://localhost:4000/playlists', {
+           const playlistsResponse = await fetch(`${API_URL}/playlists`, {
             headers: { 
               'Authorization': `Bearer ${token}`,
               'Content-Type': 'application/json'

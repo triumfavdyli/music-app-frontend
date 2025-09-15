@@ -3,6 +3,7 @@ import { Play, Pause, SkipBack, SkipForward, Volume2, Shuffle, Repeat, Heart } f
 import { useApp } from '../../context/AppContext';
 import { useToast } from '../Common/Toast';
 import { formatDuration } from '../../data/mockData';
+import { API_URL } from '../../config';
 
 export const MusicPlayer: React.FC = () => {
   const { state, dispatch } = useApp();
@@ -113,7 +114,7 @@ export const MusicPlayer: React.FC = () => {
       const token = localStorage.getItem('token');
       
       if (isLiked) {
-        await fetch(`http://localhost:4000/likes/${player.currentSong.id}`, {
+       await fetch(`${API_URL}/likes/${player.currentSong.id}`, {
           method: 'DELETE',
           headers: { 
             'Authorization': `Bearer ${token}`,
@@ -123,7 +124,7 @@ export const MusicPlayer: React.FC = () => {
         dispatch({ type: 'REMOVE_LIKED_SONG', payload: player.currentSong.id });
         showToast('Removed from liked songs', 'success');
       } else {
-        await fetch('http://localhost:4000/likes', {
+         await fetch(`${API_URL}/likes`, {
           method: 'POST',
           headers: { 
             'Authorization': `Bearer ${token}`,

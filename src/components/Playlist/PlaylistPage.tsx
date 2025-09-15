@@ -4,6 +4,7 @@ import { useApp } from '../../context/AppContext';
 import { useToast } from '../Common/Toast';
 import { SongCard } from '../Common/SongCard';
 import { Song } from '../../types';
+import { API_URL } from '../../config';
 
 interface PlaylistPageProps {
   playlistId: string;
@@ -74,7 +75,7 @@ export const PlaylistPage: React.FC<PlaylistPageProps> = ({ playlistId, onPageCh
     if (confirm('Are you sure you want to delete this playlist?')) {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch(`http://localhost:4000/playlists/${playlist.id}`, {
+        const response = await fetch(`${API_URL}/playlists/${playlist.id}`, {
           method: 'DELETE',
           headers: {
             'Authorization': `Bearer ${token}`,
