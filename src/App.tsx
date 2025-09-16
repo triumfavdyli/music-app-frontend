@@ -14,6 +14,7 @@ import { CreatePlaylistModal } from './components/Playlist/CreatePlaylistModal';
 import { MusicPlayer } from './components/Player/MusicPlayer';
 
 const AppContent: React.FC = () => {
+  console.log('API_URL from env:', import.meta.env.VITE_API_URL);
   const { state } = useApp();
   const { auth, player } = state;
   const [currentPage, setCurrentPage] = useState('home');
