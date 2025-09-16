@@ -26,7 +26,7 @@ export const LikedSongsPage: React.FC<LikedSongsPageProps> = ({ onPageChange }) 
         dispatch({ type: 'REMOVE_LIKED_SONG', payload: song.id });
       } else {
         await axios.post(
-          'http://localhost:4000/likes',
+          `${API_URL}/likes`,
           { songId: song.id },
           { headers: { Authorization: `Bearer ${token}` } }
         );
