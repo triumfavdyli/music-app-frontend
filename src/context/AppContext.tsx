@@ -3,8 +3,9 @@
 /* eslint-disable no-case-declarations */
 import React, { createContext, useContext, useReducer, useEffect, ReactNode } from 'react';
 import { AppState, User, Song, Playlist } from '../types';
-import { mockPlaylists, mockFeaturedPlaylists } from '../data/mockData';
+import { mockPlaylists, } from '../data/mockData';
 import { songService, authService } from '../services/api';
+import { API_URL } from '../config';
 
 type AppAction = 
   | { type: 'LOGIN'; payload: User }
@@ -386,7 +387,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
       if (state.auth.isAuthenticated) {
         try {
           const token = localStorage.getItem('token');
-          const response = await fetch('http://localhost:4000/likes', {
+          const response = await fetch(`${API_URL}/likes`, {
             headers: { 
               'Authorization': `Bearer ${token}`,
               'Content-Type': 'application/json'
@@ -430,7 +431,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
       if (state.auth.isAuthenticated) {
         try {
           const token = localStorage.getItem('token');
-          const response = await fetch('http://localhost:4000/playlists', {
+          const response = await fetch(`${API_URL}/playlists`, {
             headers: { 
               'Authorization': `Bearer ${token}`,
               'Content-Type': 'application/json'

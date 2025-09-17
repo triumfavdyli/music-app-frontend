@@ -6,6 +6,7 @@ import { useApp } from '../../context/AppContext';
 import { useToast } from './Toast';
 import { DropdownMenu } from './DropdownMenu';
 import { CreatePlaylistModal } from '../Playlist/CreatePlaylistModal';
+import { API_URL } from '../../config';
 
 import { formatDuration } from '../../data/mockData';
 
@@ -15,7 +16,7 @@ interface SongCardProps {
   index?: number;
   className?: string;
   onPlay?: () => void;
-  onLikeToggle?: () => void; // <-- new
+  onLikeToggle?: () => void;
 }
 
 export const SongCard: React.FC<SongCardProps> = ({
@@ -63,7 +64,7 @@ export const SongCard: React.FC<SongCardProps> = ({
         const token = localStorage.getItem('token');
         
         if (isLiked) {
-          await fetch(`http://localhost:4000/likes/${song.id}`, {
+          await fetch(`${API_URL}/likes/${song.id}`, {
             method: 'DELETE',
             headers: { 
               'Authorization': `Bearer ${token}`,
@@ -73,7 +74,7 @@ export const SongCard: React.FC<SongCardProps> = ({
           dispatch({ type: 'REMOVE_LIKED_SONG', payload: song.id });
           showToast('Removed from liked songs', 'success');
         } else {
-          await fetch('http://localhost:4000/likes', {
+          await fetch(`${API_URL}/likes`, {
             method: 'POST',
             headers: { 
               'Authorization': `Bearer ${token}`,
@@ -103,7 +104,7 @@ export const SongCard: React.FC<SongCardProps> = ({
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:4000/playlists/add-song', {
+      const response = await fetch(`${API_URL}/playlists/add-song`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -118,7 +119,7 @@ export const SongCard: React.FC<SongCardProps> = ({
       if (response.ok) {
         try {
           const token = localStorage.getItem('token');
-          const playlistsResponse = await fetch('http://localhost:4000/playlists', {
+          const playlistsResponse = await fetch(`${API_URL}/playlists`, {
             headers: { 
               'Authorization': `Bearer ${token}`,
               'Content-Type': 'application/json'

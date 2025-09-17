@@ -44,9 +44,13 @@ export const HomePage: React.FC<HomePageProps> = ({ onPageChange }) => {
   }, [dispatch]);
 
   const handleGenreClick = (genre: string) => {
-    const genreSongs = songs.filter(song => 
+    let genreSongs = songs.filter(song => 
       song.genre && song.genre.toLowerCase() === genre.toLowerCase()
     );
+    if (genreSongs.length === 0 && songs.length > 0) {
+      const shuffled = [...songs].sort(() => Math.random() - 0.5);
+      genreSongs = shuffled.slice(0, 5);
+    }
     dispatch({
       type: 'SET_SEARCH_RESULTS',
       payload: { songs: genreSongs, artists: [], albums: [] }
@@ -67,6 +71,20 @@ export const HomePage: React.FC<HomePageProps> = ({ onPageChange }) => {
       {!searchQuery && (
         <div className="block md:hidden mb-6">
           <SearchBar />
+        </div>
+      )}
+
+      {searchQuery && (
+        <div className="mb-4">
+          <button
+            onClick={() => {
+              dispatch({ type: 'SET_SEARCH_QUERY', payload: '' });
+              dispatch({ type: 'SET_SEARCH_RESULTS', payload: { songs: [], artists: [], albums: [] } });
+            }}
+            className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-semibold shadow"
+          >
+            ← Back to Home
+          </button>
         </div>
       )}
 
